@@ -54,7 +54,7 @@ namespace Principal
             return (this.columnas == otra.filas);
         }
 
-        private Matriz mutiplicar(Matriz otra)
+        private Matriz multiplicar(Matriz otra)
         {
             if (EsMultiplicablePor(otra))
             {

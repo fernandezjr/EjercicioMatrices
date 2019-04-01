@@ -11,9 +11,10 @@ namespace Principal
         static void Main(string[] args)
         {
             Matriz m1 = new Matriz(3, 2);
-
+            
             m1.Cargar();
             m1.Mostrar();
+
             Console.ReadKey();
         }
     }
