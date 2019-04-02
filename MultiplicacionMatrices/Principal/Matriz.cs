@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Principal
 {
@@ -37,15 +33,16 @@ namespace Principal
             {
                 for (int c = 0; c < columnas; c++)
                 {
-                    elementos[f, c] = GenerarNumeroAleatorio(-9, 9);
+                    elementos[f, c] = GenerarNumeroAleatorio(-9, 9, c);
                 }
             }
         }
 
-        private int GenerarNumeroAleatorio(int minimo, int maximo)
+        private int GenerarNumeroAleatorio(int minimo, int maximo,int indice)
         {
             Random aleatorio = new Random();
-            return aleatorio.Next(minimo, maximo);
+            Random b = new Random();
+            return aleatorio.Next(minimo, maximo) * indice;
         }
 
         private bool EsMultiplicablePor(Matriz otra)
@@ -55,25 +52,14 @@ namespace Principal
 
         public Matriz Multiplicar(Matriz otra)
         {
-            try
-            {
-                return MultiplicarMatrices(otra);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }            
-        }
-
-        private Matriz MultiplicarMatrices(Matriz otra)
-        {
             if (EsMultiplicablePor(otra))
             {
                 return this.MultiplicarPor(otra);
             }
             else
-                throw new Exception("No se pueden multiplicar");
+            {
+                throw new Exception("No se pudo realizar la multiplicacion: A.columnas != B.filas");
+            }
         }
 
         private Matriz MultiplicarPor(Matriz otra)
@@ -120,7 +106,7 @@ namespace Principal
             return arreglo;
         }
 
-        public int[] GetColumna(int columna)
+        private int[] GetColumna(int columna)
         {
             int[] arreglo = new int[filas];
             int c = 0, f = 0;

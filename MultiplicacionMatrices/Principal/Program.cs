@@ -1,28 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Principal
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            Matriz m1 = new Matriz(2, 2);       
-            m1.Cargar();
-            m1.Mostrar();
+        {            
+            try
+            {
+                Matriz m1 = new Matriz(2, 3);
+                m1.Cargar();
+                Console.WriteLine("Matriz A");
+                m1.Mostrar();
 
-            Console.WriteLine(" ");
+                Matriz m2 = new Matriz(3, 2);
+                m2.Cargar();
+                Console.WriteLine("\nMatriz B");
+                m2.Mostrar();
 
-            Matriz m2 = new Matriz(3, 2);
-            m2.Cargar();
-            m2.Mostrar();
-            Console.WriteLine(" ");
-
-            m1.Multiplicar(m2).Mostrar();
-
+                Console.WriteLine("\nResultado");            
+                m1.Multiplicar(m2).Mostrar();                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Console.ReadKey();
         }
     }
