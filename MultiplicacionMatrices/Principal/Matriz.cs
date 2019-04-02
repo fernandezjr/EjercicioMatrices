@@ -37,8 +37,7 @@ namespace Principal
             {
                 for (int c = 0; c < columnas; c++)
                 {
-                    Random aleatorio = new Random();
-                    elementos[f, c] = aleatorio.Next(-9, 9);
+                    elementos[f, c] = GenerarNumeroAleatorio(-9, 9);
                 }
             }
         }
@@ -54,14 +53,92 @@ namespace Principal
             return (this.columnas == otra.filas);
         }
 
-        private Matriz multiplicar(Matriz otra)
+        public Matriz Multiplicar(Matriz otra)
+        {
+            try
+            {
+                return MultiplicarMatrices(otra);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }            
+        }
+
+        private Matriz MultiplicarMatrices(Matriz otra)
         {
             if (EsMultiplicablePor(otra))
             {
-                return new Matriz(2, 2);
+                return this.MultiplicarPor(otra);
             }
             else
                 throw new Exception("No se pueden multiplicar");
+        }
+
+        private Matriz MultiplicarPor(Matriz otra)
+        {
+            Matriz resultado = new Matriz(this.filas, otra.columnas);
+            for (int f = 0; f < resultado.filas; f++)
+            {
+                for (int c = 0; c < resultado.columnas; c++)
+                {
+                    resultado.elementos[f, c] = MultiplicarArreglos(this.GetFila(f), otra.GetColumna(c));
+                }
+            }
+            return resultado;
+        }
+
+        private int MultiplicarArreglos(int[] a, int[] b)
+        {
+            int resultado = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                resultado += a[i] * b[i];
+            }
+            return resultado;
+        }
+
+        private int[] GetFila(int fila)
+        {
+            int[] arreglo = new int[columnas];
+            int f = 0, c = 0;
+            bool completo = false;
+            while(!completo && f < filas)
+            {
+                if(f == fila)
+                {
+                    while(c < columnas)
+                    {
+                        arreglo[c] = elementos[f, c];
+                        c++;
+                    }
+                    completo = true;
+                }
+                f++;
+            }
+            return arreglo;
+        }
+
+        public int[] GetColumna(int columna)
+        {
+            int[] arreglo = new int[filas];
+            int c = 0, f = 0;
+            bool completo = false;
+            while(!completo && c < columnas)
+            {
+                if(c == columna)
+                {
+                    while(f < filas)
+                    {
+                        arreglo[f] = elementos[f, c];
+                        f++;
+                    }
+                    completo = true;
+                }
+                c++;
+            }
+            return arreglo;
         }
     }
 }
